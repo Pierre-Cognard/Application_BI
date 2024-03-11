@@ -28,7 +28,7 @@ def generer_graphique(data, champ):
     plt.show()
 
 if __name__ == "__main__":
-    fichier_csv = "Foppa/Agents.csv"
+    fichier_csv = "../Foppa/Agents.csv"
     champs = ['longitude', 'latitude']  # Champs à analyser
     data = lire_fichier_csv(fichier_csv)
     for champ in champs:
