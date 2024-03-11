@@ -11,8 +11,8 @@ def main():
     cpt = 1  # Initialisation du compteur
     index_a_variable = {}  # Dictionnaire pour mapper le numéro (cpt) à la clé de dict_type_variables
 
-    for variable, nature in dict_type_variables.items():
-        print(str(cpt) + f" - {g1}" + str(variable) + f"{g0} (" + str(nature) + ")")
+    for variable, info in dict_type_variables.items():
+        print(str(cpt) + f" - {g1}" + str(variable) + f"{g0} (" + str(info["Type"]) + ")")
         index_a_variable[str(cpt)] = variable  # Associe le compteur actuel à la clé 'variable'
         cpt += 1
 
@@ -21,13 +21,13 @@ def main():
         var = str(input("\nVariable a analyser : \n"))
     
     variable_choisie = index_a_variable[var]
-    nature_variable = dict_type_variables[variable_choisie]
+    type_variable = dict_type_variables[variable_choisie]["Type"]
 
-    print(f"Variable choisie : {variable_choisie}")
+    print(f"Variable choisie : {g1}{variable_choisie}{g0}")
 
-    if (nature_variable == "Numérique"):
+    if (type_variable == "Numérique"):
         print("Analyse en cours....")
-        analyser(variable_choisie)
+        analyser(variable_choisie.split(" ")[0])
     else:
         print("TO DO")
 
