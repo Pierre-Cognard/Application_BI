@@ -1,5 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
+import numpy as np
 from dict_variables import dict_fichier_variables
 
 def lire_fichier_csv(nom_fichier):
@@ -13,16 +14,23 @@ def lire_fichier_csv(nom_fichier):
 def analyser_valeurs(data, champ):
     valeurs = [float(d[champ]) for d in data if d[champ] != ""]
     valeurs.sort()
-    occurrences = {}
+    min_val, max_val = min(valeurs), max(valeurs)
+    intervalles = np.linspace(min_val, max_val, num=min(100, len(valeurs)), endpoint=True)
+    occurrences = {intervalle: 0 for intervalle in intervalles}
     for valeur in valeurs:
-        if valeur not in occurrences:
-            occurrences[valeur] = 0
-        occurrences[valeur] += 1
+        for i in range(len(intervalles) - 1):
+            if intervalles[i] <= valeur < intervalles[i+1]:
+                occurrences[intervalles[i]] += 1
+                break
+        else:
+            occurrences[intervalles[-1]] += 1
     return occurrences
 
 def generer_graphique(data, champ):
     valeurs_analysees = analyser_valeurs(data, champ)
-    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values())
+    for valeur, occurence in valeurs_analysees.items():
+        print(f"Valeur: {valeur}, Occurences: {occurence}")
+    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=0.8)
     plt.xlabel(champ)
     plt.ylabel('Occurences')
     plt.title('Répartition des valeurs de ' + champ)
