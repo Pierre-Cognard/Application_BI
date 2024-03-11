@@ -1,5 +1,7 @@
 dict_type_variables = {
-    "name": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 5},
+    "name Agents": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 5},
+    "name Names": {"Type": "Textuelle", "File": "Names.csv","Log":False, "Seuil": 100},
+    "name Criteria": {"Type": "Textuelle", "File": "Criteria.csv","Log":False, "Seuil": 1000},
     "siret": {"Type": "Textuelle", "File": "Agents.csv","Log":False},
     "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70},
     "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 1000},
