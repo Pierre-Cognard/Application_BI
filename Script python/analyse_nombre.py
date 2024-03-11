@@ -1,7 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
-from dict_variables import dict_fichier_variables
+from dict_variables import *
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -30,7 +30,7 @@ def generer_graphique(data, champ):
     valeurs_analysees = analyser_valeurs(data, champ)
     for valeur, occurence in valeurs_analysees.items():
         print(f"Valeur: {valeur}, Occurences: {occurence}")
-    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=0.8)
+    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=5)
     plt.xlabel(champ)
     plt.ylabel('Occurences')
     plt.title('Répartition des valeurs de ' + champ)
@@ -43,8 +43,8 @@ def generer_graphique(data, champ):
     for champ in champs:
         generer_graphique(data, champ)"""
 
-def analyser(champ):
-    file = dict_fichier_variables[champ]
+def analyser_nombre(champ):
+    file = dict_type_variables[champ]["File"]
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
     generer_graphique(data, champ)
