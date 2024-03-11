@@ -1,5 +1,6 @@
 import csv
 import matplotlib.pyplot as plt
+from dict_variables import dict_fichier_variables
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -27,9 +28,15 @@ def generer_graphique(data, champ):
     plt.title('Répartition des valeurs de ' + champ)
     plt.show()
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     fichier_csv = "../Foppa/Agents.csv"
-    champs = ['longitude', 'latitude']  # Champs à analyser
+    champs = ['zipcode']  # Champs à analyser
     data = lire_fichier_csv(fichier_csv)
     for champ in champs:
-        generer_graphique(data, champ)
+        generer_graphique(data, champ)"""
+
+def analyser(champ):
+    file = dict_fichier_variables[champ]
+    fichier_csv = "../Foppa/"+file
+    data = lire_fichier_csv(fichier_csv)
+    generer_graphique(data, champ)
