@@ -21,10 +21,15 @@ def main():
         var = str(input("\nVariable a analyser : \n"))
     
     variable_choisie = index_a_variable[var]
+    nature_variable = dict_type_variables[variable_choisie]
 
     print(f"Variable choisie : {variable_choisie}")
 
-    analyser(variable_choisie)
+    if (nature_variable == "Numérique"):
+        print("Analyse en cours....")
+        analyser(variable_choisie)
+    else:
+        print("TO DO")
 
 if __name__ == "__main__":
     g0 = RGB() # couleur blanc
