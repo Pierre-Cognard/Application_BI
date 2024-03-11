@@ -27,7 +27,7 @@ def main():
 
     if (type_variable == "Numérique"):
         print("Analyse en cours....")
-        analyser(variable_choisie.split(" ")[0])
+        analyser_nombre(variable_choisie.split(" ")[0])
     else:
         print("TO DO")
 
