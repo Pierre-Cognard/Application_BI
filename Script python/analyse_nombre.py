@@ -4,6 +4,7 @@ import numpy as np
 import requests
 from dict_variables import *
 import time
+from holi import *
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -31,7 +32,8 @@ def analyser_valeurs(data, champ):
 def generer_graphique(data, champ, log):
     valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
     for valeur, occurence in valeurs_analysees.items():
-        print(f"Valeur: {valeur}, Occurences: {occurence}")
+        if occurence != 0:
+            print(f"Valeur: {valeur}, Occurences: {occurence}")
     
     if champ == "siret":
         validator = Siret()
@@ -118,6 +120,16 @@ def count_validity(sirets):
             false_count += 1
     return true_count, false_count
 
+def statistiques_valeurs(data, champ):
+    valeurs = [float(d[champ]) for d in data if d[champ] != ""]
+    moyenne = np.mean(valeurs)
+    mediane = np.median(valeurs)
+    ecart_type = np.std(valeurs)
+
+    print(f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
+    print(f"Médiane de {g1}{champ}{g0}: {round(mediane,2)}")
+    print(f"Écart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
+
 """if __name__ == "__main__":
     fichier_csv = "../Foppa/Agents.csv"
     champs = ['zipcode']  # Champs à analyser
@@ -131,3 +143,4 @@ def analyser_nombre(champ):
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
     generer_graphique(data, champ, log)
+    statistiques_valeurs(data, champ)
