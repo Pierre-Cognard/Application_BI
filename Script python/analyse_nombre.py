@@ -25,16 +25,31 @@ def analyser_valeurs(data, champ):
                 break
         else:
             occurrences[intervalles[-1]] += 1
-    return occurrences
+    return occurrences, min_val, max_val
 
-def generer_graphique(data, champ):
-    valeurs_analysees = analyser_valeurs(data, champ)
+def generer_graphique(data, champ, log):
+    valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
     for valeur, occurence in valeurs_analysees.items():
-        if occurence != 0:
-            print(f"Valeur: {valeur}, Occurences: {occurence}")
-    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=0.01)
+        print(f"Valeur: {valeur}, Occurences: {occurence}")
+
+    plage_de_donnees = max_val - min_val
+
+    # Définissez la largeur en pourcentage
+    largeur_en_pourcentage = 0.5
+
+    # Calculez la largeur en fonction de la plage de données
+    largeur = largeur_en_pourcentage / 100 * plage_de_donnees
+
+    print("largeur" , largeur)
+
+    # Maintenant, utilisez cette largeur dans la fonction plt.bar()
+    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
     plt.xlabel(champ)
-    plt.ylabel('Occurences')
+    if log:
+        plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
+        plt.ylabel('Occurences (log scale)')
+    else :
+        plt.ylabel('Occurences')
     plt.title('Répartition des valeurs de ' + champ)
     plt.show()
 
@@ -58,7 +73,7 @@ def statistiques_valeurs(data, champ):
 
 def analyser_nombre(champ):
     file = dict_type_variables[champ]["File"]
+    log = dict_type_variables[champ]["Log"]
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
-    statistiques_valeurs(data, champ)
-    generer_graphique(data, champ)
+    generer_graphique(data, champ, log)
