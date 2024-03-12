@@ -30,7 +30,8 @@ def analyser_valeurs(data, champ):
 def generer_graphique(data, champ, log):
     valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
     for valeur, occurence in valeurs_analysees.items():
-        print(f"Valeur: {valeur}, Occurences: {occurence}")
+        if occurence != 0:
+            print(f"Valeur: {valeur}, Occurences: {occurence}")
 
     plage_de_donnees = max_val - min_val
 
@@ -77,3 +78,4 @@ def analyser_nombre(champ):
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
     generer_graphique(data, champ, log)
+    statistiques_valeurs(data, champ)
