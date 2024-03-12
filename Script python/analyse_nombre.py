@@ -2,6 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 from dict_variables import *
+from holi import *
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -29,12 +30,24 @@ def analyser_valeurs(data, champ):
 def generer_graphique(data, champ):
     valeurs_analysees = analyser_valeurs(data, champ)
     for valeur, occurence in valeurs_analysees.items():
-        print(f"Valeur: {valeur}, Occurences: {occurence}")
-    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=5)
+        if occurence != 0:
+            print(f"Valeur: {valeur}, Occurences: {occurence}")
+    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=0.01)
     plt.xlabel(champ)
     plt.ylabel('Occurences')
     plt.title('Répartition des valeurs de ' + champ)
     plt.show()
+
+def statistiques_valeurs(data, champ):
+    valeurs = [float(d[champ]) for d in data if d[champ] != ""]
+    moyenne = np.mean(valeurs)
+    mediane = np.median(valeurs)
+    ecart_type = np.std(valeurs)
+
+    print(f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
+    print(f"Médiane de {g1}{champ}{g0}: {round(mediane,2)}")
+    print(f"Écart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
+
 
 """if __name__ == "__main__":
     fichier_csv = "../Foppa/Agents.csv"
@@ -47,4 +60,5 @@ def analyser_nombre(champ):
     file = dict_type_variables[champ]["File"]
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
+    statistiques_valeurs(data, champ)
     generer_graphique(data, champ)

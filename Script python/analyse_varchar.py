@@ -1,13 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
-from dict_variables  import *
-
-# Chemin du fichier CSV
-file_path = '../Foppa/Agents.csv'
-
-# Lecture des premières lignes du fichier pour comprendre sa structure
-
-
+from dict_variables import *
 
 # Fonction pour créer un diagramme en barres pour une colonne spécifique
 def plot_bar_chart_for_column(file_path, column_name, filtrage):
@@ -24,21 +17,17 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage):
         plt.bar(valeurs_filtrées.index, valeurs_filtrées.values)
         plt.xlabel(column_name)
         plt.ylabel('Occurrences')
-        plt.title(f'Répartition des valeurs de {column_name} (au moins 5 occurrences)')
+        plt.title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
         plt.xticks(rotation=45, ha='right')  # Rotation pour une meilleure lisibilité
         plt.tight_layout()  # Ajustement automatique
         plt.show()
     else:
         print(f"La colonne '{column_name}' n'existe pas dans le DataFrame.")
 
-# Exemple d'appel de la fonction
+
+def analyser_varchar(champ,file):
+    fichier_csv = "../Foppa/"+file
+    plot_bar_chart_for_column(fichier_csv, champ, dict_type_variables[champ]["Seuil"])
 
 
-def analyser_varchar(champ):
-    file = dict_fichier_variables['name_names']
-    fichier_csv = "../Foppa/"+'criteria.csv'
-    plot_bar_chart_for_column(fichier_csv, champ, dict_seuil_variables_varchar[champ])
-
-
-
-analyser_varchar('name')
+#analyser_varchar('name')
