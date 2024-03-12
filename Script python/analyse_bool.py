@@ -21,7 +21,7 @@ def plot_bar_chart_for_categorical_column(file_path, column_name):
         
         # Calcul du nombre d'occurrences pour chaque valeur unique dans la colonne
         value_counts = df[column_name].value_counts()
-       
+        
         # Création du diagramme en barres
         plt.figure(figsize=(8, 4))
         plt.bar(value_counts.index, value_counts.values)
