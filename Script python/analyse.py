@@ -3,6 +3,7 @@ import pandas as pd
 from dict_variables import dict_type_variables
 from holi import *
 from analyse_nombre import *
+from analyse_varchar import *
 
 
 def main():
@@ -28,10 +29,12 @@ def main():
     if (type_variable == "Numérique"):
         print("Analyse en cours....")
         analyser_nombre(variable_choisie.split(" ")[0])
-    else:
-        print("TO DO")
+
+    elif (type_variable == "Textuelle" or type_variable == "Categorielle"):
+        fichier = '../Foppa/'+dict_type_variables[variable_choisie]["File"]
+        
+        plot_bar_chart_for_column(fichier,variable_choisie.split(" ")[0],dict_type_variables[variable_choisie]["Seuil"])
+
 
 if __name__ == "__main__":
-    g0 = RGB() # couleur blanc
-    g1 = RGB(0, 255, 0) # couleur vert
     main()

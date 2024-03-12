@@ -12,4 +12,6 @@ def RGB(red=None, green=None, blue=None,bg=False):
         return '\u001b[0m'
     
 
+g0 = RGB() # couleur blanc
+g1 = RGB(0, 255, 0) # couleur vert
 

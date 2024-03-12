@@ -2,6 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 from dict_variables import *
+from holi import *
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -51,6 +52,17 @@ def generer_graphique(data, champ, log):
         plt.ylabel('Occurences')
     plt.title('Répartition des valeurs de ' + champ)
     plt.show()
+
+def statistiques_valeurs(data, champ):
+    valeurs = [float(d[champ]) for d in data if d[champ] != ""]
+    moyenne = np.mean(valeurs)
+    mediane = np.median(valeurs)
+    ecart_type = np.std(valeurs)
+
+    print(f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
+    print(f"Médiane de {g1}{champ}{g0}: {round(mediane,2)}")
+    print(f"Écart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
+
 
 """if __name__ == "__main__":
     fichier_csv = "../Foppa/Agents.csv"
