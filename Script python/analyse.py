@@ -30,7 +30,7 @@ def main():
         print("Analyse en cours....")
         analyser_nombre(variable_choisie.split(" ")[0])
 
-    else:
+    elif (type_variable == "Textuelle" or type_variable == "Categorielle"):
         fichier = '../Foppa/'+dict_type_variables[variable_choisie]["File"]
         
         plot_bar_chart_for_column(fichier,variable_choisie.split(" ")[0],dict_type_variables[variable_choisie]["Seuil"])
