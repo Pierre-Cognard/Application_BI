@@ -31,9 +31,18 @@ def analyser_valeurs(data, champ):
 
 def generer_graphique(data, champ, log):
     valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
+    somme = 0 # nb de valeur pour le champ
+    print()
     for valeur, occurence in valeurs_analysees.items():
         if occurence != 0:
-            print(f"Valeur: {valeur}, Occurences: {occurence}")
+            print(f"Valeur: {g1}{valeur}{g0} | Occurences: {g1}{occurence}{g0}")
+            somme += occurence
+
+    print("\n======= Infos =======")
+    print(f"Nombre de ligne : {bleue}"+str(len(data)))
+    print(f"{g0}Nombre valeur pour {g1}{champ}{g0} : {bleue}"+str(somme))
+    print(f"{g0}Taux de valeurs manquantes : {orange}"+str(round(100-(somme/len(data))*100,2))+f"%{g0}")
+    print("=====================")
     
     if champ == "siret":
         validator = Siret()
@@ -126,9 +135,11 @@ def statistiques_valeurs(data, champ):
     mediane = np.median(valeurs)
     ecart_type = np.std(valeurs)
 
+    print("\n===== Statistiques =====")
     print(f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
     print(f"Médiane de {g1}{champ}{g0}: {round(mediane,2)}")
     print(f"Écart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
+    print("========================")
 
 """if __name__ == "__main__":
     fichier_csv = "../Foppa/Agents.csv"
@@ -142,5 +153,5 @@ def analyser_nombre(champ):
     log = dict_type_variables[champ]["Log"]
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
-    generer_graphique(data, champ, log)
     statistiques_valeurs(data, champ)
+    generer_graphique(data, champ, log)

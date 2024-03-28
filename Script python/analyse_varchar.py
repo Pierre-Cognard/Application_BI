@@ -34,6 +34,18 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage):
     if column_name in df.columns:
         # Calcul du nombre d'occurrences pour chaque valeur unique dans la colonne
         value_counts = df[column_name].value_counts()
+
+        somme = 0
+
+        for index, valeur in value_counts.items():
+            somme += valeur
+
+        print("\n======= Infos =======")
+        print(f"Nombre de ligne : {bleue}"+str(len(df)))
+        print(f"{g0}Nombre valeur pour {g1}{column_name}{g0} : {bleue}"+str(somme))
+        print(f"{g0}Taux de valeurs manquantes : {orange}"+str(round(100-(somme/len(df))*100,2))+f"%{g0}")
+        print("=====================\n")
+
         valeurs_filtrées = value_counts[value_counts >= filtrage]
 
         #liste={13:0,14:0,15:0,16:0,17:0} # taille des siret
@@ -62,7 +74,7 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage):
         print(f"La colonne '{column_name}' n'existe pas dans le DataFrame.")
 
 
-def analyser_varchar(champ,file):
+def analyser_varchar(champ, file):
     fichier_csv = "../Foppa/"+file
     plot_bar_chart_for_column(fichier_csv, champ, dict_type_variables[champ]["Seuil"])
 
