@@ -55,7 +55,7 @@ def main():
     for i, (key, var_name) in enumerate(index_a_variable.items()):
         row = i // grid_size
         col = i % grid_size
-        button = tk.Button(frame, text=var_name, command=lambda vn=var_name: on_button_click(vn))
+        button = tk.Button(frame, text=var_name+"\n("+dict_type_variables[var_name]["Type"]+")", font=("Arial", 12, "bold"),command=lambda vn=var_name: on_button_click(vn))
         button.grid(row=row, column=col, sticky='nsew', padx=2, pady=2)
         # Make the buttons square
         button.config(height=button_size//10, width=button_size//10+15)
@@ -68,17 +68,17 @@ def main():
     root.mainloop()
 
 def open_cmd_and_display_text(text):
-    # Crée un fichier batch temporaire
     with tempfile.NamedTemporaryFile(delete=False, suffix='.bat', mode='w', newline='\n') as tmpfile:
-        # S'assure que '@echo off' est la première ligne
         tmpfile.write('@echo off\n')
         for line in text.split('\n'):
-            # Échappe les caractères spéciaux potentiels dans 'line'
             safe_line = line.replace('^', '^^').replace('&', '^&').replace('<', '^<').replace('>', '^>').replace('|', '^|').replace('"', '^"')
-            tmpfile.write(f'echo {safe_line}\n')
-        tmpfile.write('pause > nul\n')  # Ajoute une pause sans afficher "Appuyez sur une touche pour continuer..."
+            # Pour les lignes vides, utilisez "echo.", sinon "echo {safe_line}"
+            if not line.strip():  # Vérifie si la ligne est vide ou ne contient que des espaces
+                tmpfile.write('echo.\n')
+            else:
+                tmpfile.write(f'echo {safe_line}\n')
+        tmpfile.write('pause > nul\n')
     
-    # Exécute le fichier batch dans une nouvelle fenêtre de commande
     subprocess.run(f'start cmd /k "{tmpfile.name}"', shell=True, check=True)
 
 def on_button_click(var_name):

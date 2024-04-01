@@ -48,7 +48,7 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
         data = print_or_save(affichage, data, "\n======= Infos =======")
         data = print_or_save(affichage, data, f"Nombre de ligne : {bleue}"+str(len(df)))
         data = print_or_save(affichage, data, f"{g0}Nombre valeur pour {g1}{column_name}{g0} : {bleue}"+str(somme))
-        data = print_or_save(affichage, data, f"{g0}Taux de valeurs manquantes : {orange}"+str(round(100-(somme/len(df))*100,2))+f"%{g0}")
+        data = print_or_save(affichage, data, f"{g0}Taux de valeurs manquantes : {orange}{str(round(100-(somme/len(df))*100,2))}%{g0}")
         data = print_or_save(affichage, data, "=====================\n")
 
         valeurs_filtrées = value_counts[value_counts >= filtrage]
