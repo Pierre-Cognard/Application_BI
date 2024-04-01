@@ -2,6 +2,9 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from dict_variables import *
 from holi import *
+import warnings
+
+warnings.filterwarnings("ignore")
 
 def verifier_chaine(valeur):
     # Suppression des tirets et des espaces

@@ -8,6 +8,7 @@ import tkinter as tk
 import subprocess
 import tempfile
 
+
 var_to_chart = {}
 data_for_variable = {}
 open_or_close = {}
@@ -33,7 +34,7 @@ def main():
             except:
                 print(f" ==> {rouge}FAIL{g0}")
 
-        elif info["Type"] == "Numérique" and variable != "tenderNumber":
+        elif info["Type"] == "Numérique":
             print(f"Analyse de : {g1}" + variable + f"{g0}",end="")
             try :
                 var_to_chart[variable], data_for_variable[variable] = analyser_nombre_all(variable)

@@ -5,6 +5,9 @@ import requests
 from dict_variables import *
 import time
 from holi import *
+import warnings
+
+warnings.filterwarnings("ignore")
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -41,7 +44,7 @@ def generer_graphique(data, champ, log, affichage):
     text = print_or_save(affichage, text, "\n======= Infos =======")
     text = print_or_save(affichage, text, f"Nombre de ligne : {bleue}"+str(len(data)))
     text = print_or_save(affichage, text, f"{g0}Nombre valeur pour {g1}{champ}{g0} : {bleue}"+str(somme))
-    text = print_or_save(affichage, text, f"{g0}Taux de valeurs manquantes : {orange}"+str(round(100-(somme/len(data))*100,2))+f"%{g0}")
+    text = print_or_save(affichage, text, f"{g0}Taux de valeurs manquantes : {orange}{str(round(100-(somme/len(data))*100,2))}%{g0}")
     text = print_or_save(affichage, text, "=====================")
 
     valeurs = [float(d[champ]) for d in data if d[champ] != ""]
@@ -51,8 +54,8 @@ def generer_graphique(data, champ, log, affichage):
 
     text = print_or_save(affichage, text, "\n===== Statistiques =====")
     text = print_or_save(affichage, text, f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
-    text = print_or_save(affichage, text, f"Médiane de {g1}{champ}{g0}: {round(mediane,2)}")
-    text = print_or_save(affichage, text, f"Écart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
+    text = print_or_save(affichage, text, f"Mediane de {g1}{champ}{g0}: {round(mediane,2)}")
+    text = print_or_save(affichage, text, f"Ecart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
     text = print_or_save(affichage, text, "========================")
     
     if champ == "sirett":
