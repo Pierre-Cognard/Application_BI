@@ -34,11 +34,12 @@ def analyser_valeurs(data, champ):
 
 def generer_graphique(data, champ, log, affichage):
     text = ""
-    valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
     somme = 0 # nb de valeur pour le champ
+
+    valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
+
     for valeur, occurence in valeurs_analysees.items():
         if occurence != 0:
-            text = print_or_save(affichage, text, f"Valeur: {g1}{valeur}{g0} | Occurences: {g1}{occurence}{g0}")
             somme += occurence
 
     text = print_or_save(affichage, text, "\n======= Infos =======")
@@ -57,6 +58,10 @@ def generer_graphique(data, champ, log, affichage):
     text = print_or_save(affichage, text, f"Mediane de {g1}{champ}{g0}: {round(mediane,2)}")
     text = print_or_save(affichage, text, f"Ecart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
     text = print_or_save(affichage, text, "========================")
+
+    for valeur, occurence in valeurs_analysees.items():
+        if occurence != 0:
+            text = print_or_save(affichage, text, f"Valeur: {g1}{valeur}{g0} | Occurences: {g1}{occurence}{g0}")
     
     if champ == "sirett":
         validator = Siret()
