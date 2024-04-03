@@ -21,9 +21,9 @@ lots_with_agents_df = pd.merge(lots_df, lot_buyers_df, on='lotId')
 lots_with_agents_df = pd.merge(lots_df, lot_suppliers_df, on='lotId')
 # Fusion du résultat avec agents_df pour obtenir le département de chaque agent
 merged_df = pd.merge(lots_with_agents_df, agents_df, on='agentId')
-merged_df = pd.merge(lots_df, criteria_df, on='lotId')
+#merged_df = pd.merge(lots_df, criteria_df, on='lotId')
 
-
+print(merged_df.head())
 
 # Assurez-vous que vos DataFrames sont correctement chargés et fusionnés comme dans votre script initial
 
@@ -87,7 +87,7 @@ def plot_filtered_violin(data, cat_var, num_var, cat_filter=None, num_filter=Non
 
 # Utilisation de l'ANOVA
 print("Résultats de l'ANOVA :")
-anova_test(data=merged_df, cat_var='type', num_var='weight')
+anova_test(data=merged_df, cat_var='topType', num_var='numberTendersSme')
 
 
 # Pour utiliser le coefficient de corrélation de point bisériel, assurez-vous que votre variable catégorielle est binaire.
@@ -97,10 +97,10 @@ anova_test(data=merged_df, cat_var='type', num_var='weight')
 # Exemple d'utilisation de la fonction:
 plot_filtered_violin(
     data=merged_df,
-    cat_var='type',  # Variable catégorielle pour l'axe des x
-    num_var='weight',  # Variable numérique pour l'axe des y
-    cat_filter=('type', ['PRICE','DELAY','TECHNICAL','ENVIRONMENTAL','SOCIAL','OTHER'])  # Liste des villes à inclure
-    #num_filter=('awardPrice', 10000000)  # Filtrer pour les prix inférieurs à 200000
+    cat_var='department',  # Variable catégorielle pour l'axe des x
+    num_var='awardEstimatedPrice',  # Variable numérique pour l'axe des y
+    cat_filter=('department', ['84','75','35','65']),  # Liste des villes à inclure
+    num_filter=('awardEstimatedPrice', 10000000)  # Filtrer pour les prix inférieurs à 200000
 )
 
 

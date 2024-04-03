@@ -50,5 +50,5 @@ def plot_scatter_with_correlation(data, num_var1, num_var2):
 plot_scatter_with_correlation(
     data=merged_df,
     num_var1='contractDuration',  # Remplacez par le nom de votre première variable numérique
-    num_var2='publicityDuration'   # Remplacez par le nom de votre seconde variable numérique
+    num_var2='awardPrice'   # Remplacez par le nom de votre seconde variable numérique
 )

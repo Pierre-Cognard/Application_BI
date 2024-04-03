@@ -51,7 +51,7 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage):
             #liste[len(str(index))] += 1  # taille des siret
         #print(liste)  # taille des siret
 
-        plt.bar(valeurs_filtrées.index, valeurs_filtrées.values)
+        plt.bar(valeurs_filtrées.index, valeurs_filtrées.values, log=True)
         plt.xlabel(column_name)
         plt.ylabel('Occurrences')
         plt.title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
@@ -67,4 +67,4 @@ def analyser_varchar(champ,file):
     plot_bar_chart_for_column(fichier_csv, champ, dict_type_variables[champ]["Seuil"])
 
 
-#analyser_varchar('name')
+analyser_varchar('country','Agents.csv')
