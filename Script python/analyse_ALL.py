@@ -7,6 +7,7 @@ from analyse_varchar import *
 import tkinter as tk
 import subprocess
 import tempfile
+from PIL import Image, ImageTk
 
 
 var_to_chart = {}
@@ -18,6 +19,8 @@ def main():
     global fig
     root = tk.Tk()
     root.title("Variables a analyser")
+
+    print("Analyse des variables : ")
 
     cpt = 1  # Initialisation du compteur
     index_a_variable = {}  # Dictionnaire pour mapper le numéro (cpt) à la clé de dict_type_variables
@@ -82,8 +85,32 @@ def open_cmd_and_display_text(text):
 
 def on_button_click(var_name):
     print(f"Affichage de : {g1}{var_name}{g0}")
-    plt.tight_layout()  # Ajustement automatique
-    var_to_chart[var_name].show()
+
+    fenetre = tk.Toplevel() 
+    print(f"images/variables_individuelles/{var_name}.png")
+ 
+    ## Ouverture du fichier
+    image = Image.open(f'images/variables_individuelles/{var_name}.png')  # Utilisation de var_name pour ouvrir l'image dynamiquement
+    ## Remplace PhotoImage de Tkinter par celui de PIL
+    photo = ImageTk.PhotoImage(image)
+    
+    label = tk.Label(fenetre, image=photo)
+    label.image = photo  # Stocke une référence à l'objet PhotoImage
+    label.pack()
+    
+
+    """try:
+        # Essaye d'afficher la figure. Cela peut échouer si la figure a été fermée.
+        var_to_chart[var_name].show()
+    except ValueError as e:
+        print("La figure a été fermée, recréation de la figure.")
+        # Ici, vous devez recréer votre figure basée sur les données.
+        # Ceci est un exemple de recréation, votre logique peut varier.
+        fig, ax = plt.subplots()
+        ax.plot(data_for_variable[var_name])  # Exemple de création de graphique
+        plt.tight_layout()  # Ajustement automatique
+        var_to_chart[var_name] = fig  # Stocke la nouvelle figure
+        fig.show()  # Affiche la nouvelle figure"""
     open_cmd_and_display_text(data_for_variable[var_name])
 
 if __name__ == "__main__":

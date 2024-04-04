@@ -97,28 +97,22 @@ def generer_graphique(data, champ, log, affichage):
     # Calculez la largeur en fonction de la plage de données
     largeur = largeur_en_pourcentage / 100 * plage_de_donnees
 
+    
+    # Maintenant, utilisez cette largeur dans la fonction plt.bar()
+    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
+    plt.xlabel(champ)
+    if log:
+        plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
+        plt.ylabel('Occurences (log scale)')
+    else :
+        plt.ylabel('Occurences')
+    plt.title('Répartition des valeurs de ' + champ)
+
     if affichage:
-        # Maintenant, utilisez cette largeur dans la fonction plt.bar()
-        plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
-        plt.xlabel(champ)
-        if log:
-            plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
-            plt.ylabel('Occurences (log scale)')
-        else :
-            plt.ylabel('Occurences')
-        plt.title('Répartition des valeurs de ' + champ)
         plt.show()
     else:
-        fig, ax = plt.subplots()
-        ax.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
-        ax.set_xlabel(champ)
-        if log:
-            ax.set_yscale('log')  # Utilisez une échelle logarithmique pour l'axe y
-            ax.set_ylabel('Occurences (log scale)')
-        else:
-            ax.set_ylabel('Occurences')
-        ax.set_title('Répartition des valeurs de ' + champ)
-        return fig, text
+        plt.savefig(f"images/variables_individuelles/{champ}.png")
+
 
 class Siret:
     SIRET_LENGTH = 14
