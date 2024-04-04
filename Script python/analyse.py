@@ -25,15 +25,13 @@ def main():
     type_variable = dict_type_variables[variable_choisie]["Type"]
 
     print(f"Variable choisie : {g1}{variable_choisie}{g0}")
+    print("Analyse en cours....")
 
     if (type_variable == "Numérique"):
-        print("Analyse en cours....")
         analyser_nombre(variable_choisie.split(" ")[0])
 
     elif (type_variable == "Textuelle" or type_variable == "Categorielle"):
-        fichier = '../Foppa/'+dict_type_variables[variable_choisie]["File"]
-        
-        plot_bar_chart_for_column(fichier,variable_choisie.split(" ")[0],dict_type_variables[variable_choisie]["Seuil"])
+        analyser_varchar(variable_choisie)
 
 
 if __name__ == "__main__":
