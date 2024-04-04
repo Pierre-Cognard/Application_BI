@@ -109,7 +109,7 @@ class Siret:
 def is_siret_valid(siret):
     url = f"https://api.insee.fr/entreprises/sirene/V3/siret/{siret}"
     headers = {
-        "Authorization": "Bearer 8164183c-73ab-3977-b9a3-18dfdb3f3dc8"
+        "Authorization": "Bearer 870e79f3-ad71-398e-b0b4-04a485b1a7ea"
     }
     response = requests.get(url, headers=headers)
     time.sleep(0.5)  # Pause de 2 secondes max api

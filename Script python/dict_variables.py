@@ -2,7 +2,7 @@ dict_type_variables = {
     "name [Agents]": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 100}, # OK
     "name [Names]": {"Type": "Textuelle", "File": "Names.csv","Log":False, "Seuil": 100}, # OK
     "name [Criteria]": {"Type": "Textuelle", "File": "Criteria.csv","Log":False, "Seuil": 10000}, # OK
-    "siret": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 1}, # A CORRIGER
+    "siret": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 1}, # A CORRIGER
     "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70}, # OK
     "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False,"Seuil": 1000}, # OK
     "zipcode": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 800}, # OK Textuelle --> Numérique
