@@ -67,6 +67,16 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
                 data = print_or_save(affichage, data, f"Index: {g1}{index}{g0} | Valeur: {g1}{valeur}{g0}")
             #liste[len(str(index))] += 1  # taille des siret
         #print(liste)  # taille des siret
+<<<<<<< HEAD
+
+        plt.bar(valeurs_filtrées.index, valeurs_filtrées.values, log=True)
+        plt.xlabel(column_name)
+        plt.ylabel('Occurrences')
+        plt.title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
+        plt.xticks(rotation=45, ha='right')  # Rotation pour une meilleure lisibilité
+        plt.tight_layout()  # Ajustement automatique
+        plt.show()
+=======
                 
         if affichage:
             plt.bar(valeurs_filtrées.index, valeurs_filtrées.values)
@@ -88,6 +98,7 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
             plt.tight_layout()  # Ajustement automatique
             return fig, data
         
+>>>>>>> origin/main
     else:
         print(f"La colonne '{column_name}' n'existe pas dans le DataFrame.")
         return None
@@ -109,3 +120,7 @@ def analyser_varchar_all(champ):
     fichier_csv = '../Foppa/'+dict_type_variables[champ]["File"]
     return plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], False)
 
+<<<<<<< HEAD
+analyser_varchar('country','Agents.csv')
+=======
+>>>>>>> origin/main

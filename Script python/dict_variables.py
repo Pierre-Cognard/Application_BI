@@ -6,7 +6,7 @@ dict_type_variables = {
     "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70}, # OK
     "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False,"Seuil": 1000}, # OK
     "zipcode": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 800}, # OK Textuelle --> Numérique
-    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 5000}, # OK
+    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 1}, # OK
     "department": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 2000}, # OK
     "longitude": {"Type": "Numérique", "File": "Agents.csv","Log":True},
     "latitude": {"Type": "Numérique", "File": "Agents.csv","Log":True},
