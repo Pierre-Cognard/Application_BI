@@ -101,8 +101,8 @@ def print_or_save(affichage, data, text):
 
 
 
-def analyser_varchar(champ):
-    fichier_csv = '../Foppa/'+dict_type_variables[champ]["File"]
+def analyser_varchar(champ,bdd):
+    fichier_csv = f'../{bdd}/'+dict_type_variables[champ]["File"]
     plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], True)
 
 def analyser_varchar_all(champ):
