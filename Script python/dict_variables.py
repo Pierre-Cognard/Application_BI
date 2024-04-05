@@ -18,7 +18,7 @@ dict_type_variables = {
     "awardEstimatedPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True},
     "awardPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True},
     "cpv": {"Type": "Textuelle", "File": "Lots.csv","Log":True, "Seuil": 20000}, # A CORRIGER
-    "lotsNumber": {"Type": "Textuelle", "File": "Lots.csv","Log":True, "Seuil": 1000},
+    "lotsNumber": {"Type": "Textuelle", "File": "Lots.csv","Log":True, "Seuil": 1001},
     "onBehalf": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
     "jointProcurement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
     "fraAgreement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
