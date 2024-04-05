@@ -14,4 +14,7 @@ def RGB(red=None, green=None, blue=None,bg=False):
 
 g0 = RGB() # couleur blanc
 g1 = RGB(0, 255, 0) # couleur vert
+orange = RGB(255, 128, 0) # couleur orange
+bleue = RGB(0, 255, 255) # couleur bleue
+rouge = RGB(255, 0, 0) # couleur rouge
 

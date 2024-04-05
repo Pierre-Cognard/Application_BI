@@ -5,6 +5,9 @@ import requests
 from dict_variables import *
 import time
 from holi import *
+import warnings
+
+warnings.filterwarnings("ignore")
 
 def lire_fichier_csv(nom_fichier):
     donnees = []
@@ -29,13 +32,38 @@ def analyser_valeurs(data, champ):
             occurrences[intervalles[-1]] += 1
     return occurrences, min_val, max_val
 
-def generer_graphique(data, champ, log):
+def generer_graphique(data, champ, log, affichage):
+    text = ""
+    somme = 0 # nb de valeur pour le champ
+
     valeurs_analysees, min_val, max_val = analyser_valeurs(data, champ)
+
     for valeur, occurence in valeurs_analysees.items():
         if occurence != 0:
-            print(f"Valeur: {valeur}, Occurences: {occurence}")
+            somme += occurence
+
+    text = print_or_save(affichage, text, "\n======= Infos =======")
+    text = print_or_save(affichage, text, f"Nombre de ligne : {bleue}"+str(len(data)))
+    text = print_or_save(affichage, text, f"{g0}Nombre valeur pour {g1}{champ}{g0} : {bleue}"+str(somme))
+    text = print_or_save(affichage, text, f"{g0}Taux de valeurs manquantes : {orange}{str(round(100-(somme/len(data))*100,2))}%{g0}")
+    text = print_or_save(affichage, text, "=====================")
+
+    valeurs = [float(d[champ]) for d in data if d[champ] != ""]
+    moyenne = np.mean(valeurs)
+    mediane = np.median(valeurs)
+    ecart_type = np.std(valeurs)
+
+    text = print_or_save(affichage, text, "\n===== Statistiques =====")
+    text = print_or_save(affichage, text, f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
+    text = print_or_save(affichage, text, f"Mediane de {g1}{champ}{g0}: {round(mediane,2)}")
+    text = print_or_save(affichage, text, f"Ecart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
+    text = print_or_save(affichage, text, "========================")
+
+    for valeur, occurence in valeurs_analysees.items():
+        if occurence != 0:
+            text = print_or_save(affichage, text, f"Valeur: {g1}{valeur}{g0} | Occurences: {g1}{occurence}{g0}")
     
-    if champ == "siret":
+    if champ == "sirett":
         validator = Siret()
         valid_count = 0
         invalid_count = 0
@@ -69,17 +97,28 @@ def generer_graphique(data, champ, log):
     # Calculez la largeur en fonction de la plage de données
     largeur = largeur_en_pourcentage / 100 * plage_de_donnees
 
-
-    # Maintenant, utilisez cette largeur dans la fonction plt.bar()
-    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
-    plt.xlabel(champ)
-    if log:
-        plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
-        plt.ylabel('Occurences (log scale)')
-    else :
-        plt.ylabel('Occurences')
-    plt.title('Répartition des valeurs de ' + champ)
-    plt.show()
+    if affichage:
+        # Maintenant, utilisez cette largeur dans la fonction plt.bar()
+        plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
+        plt.xlabel(champ)
+        if log:
+            plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
+            plt.ylabel('Occurences (log scale)')
+        else :
+            plt.ylabel('Occurences')
+        plt.title('Répartition des valeurs de ' + champ)
+        plt.show()
+    else:
+        fig, ax = plt.subplots()
+        ax.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
+        ax.set_xlabel(champ)
+        if log:
+            ax.set_yscale('log')  # Utilisez une échelle logarithmique pour l'axe y
+            ax.set_ylabel('Occurences (log scale)')
+        else:
+            ax.set_ylabel('Occurences')
+        ax.set_title('Répartition des valeurs de ' + champ)
+        return fig, text
 
 class Siret:
     SIRET_LENGTH = 14
@@ -100,7 +139,7 @@ class Siret:
 def is_siret_valid(siret):
     url = f"https://api.insee.fr/entreprises/sirene/V3/siret/{siret}"
     headers = {
-        "Authorization": "Bearer 8164183c-73ab-3977-b9a3-18dfdb3f3dc8"
+        "Authorization": "Bearer 870e79f3-ad71-398e-b0b4-04a485b1a7ea"
     }
     response = requests.get(url, headers=headers)
     time.sleep(0.5)  # Pause de 2 secondes max api
@@ -120,15 +159,6 @@ def count_validity(sirets):
             false_count += 1
     return true_count, false_count
 
-def statistiques_valeurs(data, champ):
-    valeurs = [float(d[champ]) for d in data if d[champ] != ""]
-    moyenne = np.mean(valeurs)
-    mediane = np.median(valeurs)
-    ecart_type = np.std(valeurs)
-
-    print(f"Moyenne de {g1}{champ}{g0}: {round(moyenne,2)}")
-    print(f"Médiane de {g1}{champ}{g0}: {round(mediane,2)}")
-    print(f"Écart type de {g1}{champ}{g0}: {round(ecart_type,2)}")
 
 """if __name__ == "__main__":
     fichier_csv = "../Foppa/Agents.csv"
@@ -137,10 +167,23 @@ def statistiques_valeurs(data, champ):
     for champ in champs:
         generer_graphique(data, champ)"""
 
+def print_or_save(affichage, data, text):
+    if affichage:
+        print(text)
+    else:
+        data += text+"\n"
+    return data
+
 def analyser_nombre(champ):
     file = dict_type_variables[champ]["File"]
     log = dict_type_variables[champ]["Log"]
     fichier_csv = "../Foppa/"+file
     data = lire_fichier_csv(fichier_csv)
-    generer_graphique(data, champ, log)
-    statistiques_valeurs(data, champ)
+    generer_graphique(data, champ, log, True)
+
+def analyser_nombre_all(champ):
+    file = dict_type_variables[champ]["File"]
+    log = dict_type_variables[champ]["Log"]
+    fichier_csv = "../Foppa/"+file
+    data = lire_fichier_csv(fichier_csv)
+    return generer_graphique(data, champ, log, False)
