@@ -6,7 +6,7 @@ dict_type_variables = {
     "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70}, # OK
     "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False,"Seuil": 1000}, # OK
     "zipcode": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 800}, # OK Textuelle --> Numérique
-    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 5000}, # OK
+    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 1}, # OK
     "department": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 2000}, # OK
     "longitude": {"Type": "Numérique", "File": "Agents.csv","Log":True},
     "latitude": {"Type": "Numérique", "File": "Agents.csv","Log":True},
@@ -17,8 +17,8 @@ dict_type_variables = {
     "awardDate": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1000}, # OK mais interprétation ?
     "awardEstimatedPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True},
     "awardPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "cpv": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1000}, # A CORRIGER
-    "tenderNumber": {"Type": "Numérique", "File": "Lots.csv","Log":True},
+    "cpv": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Seuil": 20000}, # A CORRIGER
+    "lotsNumber": {"Type": "Textuelle", "File": "Lots.csv","Log":True, "Seuil": 1001},
     "onBehalf": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
     "jointProcurement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
     "fraAgreement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
