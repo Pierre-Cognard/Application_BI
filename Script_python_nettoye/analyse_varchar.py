@@ -3,9 +3,6 @@ import pandas as pd
 from dict_variables import *
 from holi import *
 import warnings
-from Levenshtein import ratio
-from tqdm import tqdm
-
 
 warnings.filterwarnings("ignore")
 
@@ -19,54 +16,6 @@ def verifier_chaine(valeur):
         return "N"
     else:
         return "DEGAGE"
-    
-def regrouper_valeurs_proches(valeurs_filtrées, seuil):
-    groupes = {}  # Dictionnaire pour stocker les valeurs regroupées et leurs occurrences
-    groupes_fusionnés_liste = {}  # Dictionnaire pour stocker les groupes fusionnés contenant au moins deux éléments
-    index_original = list(valeurs_filtrées.index)
-    groupes_fusionnés = 0  # Compteur des groupes fusionnés contenant au moins deux éléments
-
-    for i, valeur in enumerate(index_original):
-        groupe_trouvé = False
-        for groupe in groupes.keys():
-            # Vérifier si la valeur est proche d'une valeur déjà regroupée
-            if any(ratio(valeur, val) >= seuil for val in groupe):
-                groupes[groupe].append(valeur)
-                groupe_trouvé = True
-                # Vérifier si le groupe a été fusionné et contient maintenant au moins deux éléments
-                if len(groupes[groupe]) == 2:
-                    groupes_fusionnés += 1
-                    groupes_fusionnés_liste[groupe] = [valeur]  # Initialiser la liste avec la première valeur
-                    groupes_fusionnés_liste[groupe].append(groupe)  # Ajouter la valeur au groupe fusionné
-
-                else:
-                    groupes_fusionnés_liste[groupe].append(valeur)  # Ajouter la valeur au groupe fusionné
-                break
-        if not groupe_trouvé:
-            groupes[(valeur,)] = [valeur]
-    
-    print(f"Nombre de groupes fusionnés : {groupes_fusionnés}")
-    print("Liste des groupes fusionnés :")
-    for groupe, valeurs in groupes_fusionnés_liste.items():
-        print(f"Groupe : {groupe}")
-        print(f"Valeurs : {valeurs}")
-
-    # Calculer les occurrences des valeurs regroupées
-    valeurs_regroupees = {"/".join(groupe): sum(valeurs_filtrées.loc[groupe]) for groupe in groupes.values()}
-    
-    # Filtrer les valeurs regroupées dont la somme est supérieure à 100
-    valeurs_regroupees_filtrees = {groupe: somme for groupe, somme in valeurs_regroupees.items() if somme > 100}
-
-    # Trier les valeurs regroupées dans l'ordre décroissant selon leur somme
-    valeurs_regroupees_filtrees_triees = dict(sorted(valeurs_regroupees_filtrees.items(), key=lambda item: item[1], reverse=True))
-
-    
-    return valeurs_regroupees_filtrees_triees
-
-
-
-
-
 
 # Fonction pour créer un diagramme en barres pour une colonne spécifique
 def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
@@ -102,13 +51,11 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
         data = print_or_save(affichage, data, f"{g0}Taux de valeurs manquantes : {orange}{str(round(100-(somme/len(df))*100,2))}%{g0}")
         data = print_or_save(affichage, data, "=====================\n")
 
+        valeurs_filtrées = value_counts[value_counts >= filtrage]
+
         #liste={13:0,14:0,15:0,16:0,17:0} # taille des siret
 
-        value_counts = value_counts[value_counts >= 4]
-
-        valeurs_regroupees = regrouper_valeurs_proches(value_counts, seuil=0.95)  # Appel à la fonction de regroupement des valeurs
-
-        for index, valeur in value_counts.items():
+        for index, valeur in valeurs_filtrées.items():
             if column_name == "contractorSme":
                 if index == "Y":
                     data = print_or_save(affichage, data, f"Index: {g1}{index}{g0} | Valeur: {g1}{valeur} (+{cpt_y}){g0}")
@@ -120,13 +67,9 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
                 data = print_or_save(affichage, data, f"Index: {g1}{index}{g0} | Valeur: {g1}{valeur}{g0}")
             #liste[len(str(index))] += 1  # taille des siret
         #print(liste)  # taille des siret
-
-        for groupe, valeur in valeurs_regroupees.items():
-            data = print_or_save(affichage, data, f"Group: {g1}{groupe}{g0} | Valeur: {g1}{valeur}{g0}")
-
                 
         if affichage:
-            plt.bar(valeurs_regroupees.keys(), valeurs_regroupees.values())
+            plt.bar(valeurs_filtrées.index, valeurs_filtrées.values)
             plt.xlabel(column_name)
             plt.ylabel('Occurrences')
             plt.title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
@@ -135,7 +78,7 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
             plt.show()
         else:
             fig, ax = plt.subplots()
-            ax.bar(valeurs_regroupees.keys(), valeurs_regroupees.values())
+            ax.bar(valeurs_filtrées.index, valeurs_filtrées.values)
             ax.set_xlabel(column_name)
             ax.set_ylabel('Occurrences')
             ax.set_title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
@@ -158,8 +101,9 @@ def print_or_save(affichage, data, text):
 
 
 
-def analyser_varchar(champ):
-    fichier_csv = '../Foppa/'+dict_type_variables[champ]["File"]
+def analyser_varchar(champ,bdd):
+    fichier_csv = f'../{bdd}/'+dict_type_variables[champ]["File"]
+    print(fichier_csv)
     plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], True)
 
 def analyser_varchar_all(champ):

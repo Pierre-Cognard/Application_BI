@@ -2,7 +2,7 @@ import pandas as pd
 from dict_variables import dict_type_variables
 from holi import *
 from analyse_nombre import *
-from analyse_varchar_nettoye import *
+from analyse_varchar import *
 from pathlib import Path
 from Levenshtein import ratio
 from tqdm import tqdm
@@ -18,7 +18,7 @@ def regrouper_valeurs_similaires(variable, seuil):
 
     groupes_fusionnés_liste = {}  # Dictionnaire pour stocker les groupes fusionnés contenant au moins deux éléments
 
-    fichier_origine = str(PARENT_FOLDER / 'Foppa' / dict_type_variables[variable]["File"])
+    fichier_origine = str(PARENT_FOLDER / 'Foppa_clean' / dict_type_variables[variable]["File"])
 
     df = pd.read_csv(fichier_origine)
     nouveau_df = df.copy()  # Copie du DataFrame original pour éviter de modifier les données d'origine

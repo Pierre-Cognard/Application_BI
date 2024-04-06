@@ -174,10 +174,10 @@ def print_or_save(affichage, data, text):
         data += text+"\n"
     return data
 
-def analyser_nombre(champ):
+def analyser_nombre(champ,bdd):
     file = dict_type_variables[champ]["File"]
     log = dict_type_variables[champ]["Log"]
-    fichier_csv = "../Foppa/"+file
+    fichier_csv = f"../{bdd}/"+file
     data = lire_fichier_csv(fichier_csv)
     generer_graphique(data, champ, log, True)
 
