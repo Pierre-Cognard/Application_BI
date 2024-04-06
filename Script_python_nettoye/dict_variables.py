@@ -1,41 +1,41 @@
 dict_type_variables = {
-    "name [Agents]": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 100}, # OK
-    "name [Names]": {"Type": "Textuelle", "File": "Names.csv","Log":False, "Seuil": 100}, # OK
-    "name [Criteria]": {"Type": "Textuelle", "File": "Criteria.csv","Log":False, "Seuil": 10000}, # OK
-    "siret": {"Type": "Numérique", "File": "Agents.csv","Log":True, "Seuil": 1}, # A CORRIGER
-    "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70}, # OK
-    "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False,"Seuil": 1000}, # OK
-    "zipcode": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 800}, # OK Textuelle --> Numérique
-    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 1}, # OK
-    "department": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 2000}, # OK
-    "longitude": {"Type": "Numérique", "File": "Agents.csv","Log":True},
-    "latitude": {"Type": "Numérique", "File": "Agents.csv","Log":True},
-    "weight": {"Type": "Numérique", "File": "Criteria.csv","Log":True},
-    "type": {"Type": "Categorielle", "File": "Criteria.csv","Log":False, "Seuil": 1}, # OK
-    "correctionsNb": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "cancelled": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "awardDate": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1000}, # OK mais interprétation ?
-    "awardEstimatedPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "awardPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "cpv": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Seuil": 20000}, # A CORRIGER
-    "lotsNumber": {"Type": "Textuelle", "File": "Lots.csv","Log":True, "Seuil": 1001},
-    "onBehalf": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "jointProcurement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "fraAgreement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "fraEstimated": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "numberTenders": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "accelerated": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK le reste à N ?
-    "outOfDirectives": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "contractorSme": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 11000}, # OK fixed
-    "numberTendersSme": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "subContracted": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "gpa": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1},
-    "multipleCae": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "typeOfContract": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1},
-    "topType": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "renewal": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1}, # OK
-    "contractDuration": {"Type": "Numérique", "File": "Lots.csv","Log":True},
-    "publicityDuration": {"Type": "Numérique", "File": "Lots.csv","Log":True},
+    "name [Agents]": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 100, "Grouper":True}, # OK
+    "name [Names]": {"Type": "Textuelle", "File": "Names.csv","Log":False, "Seuil": 100, "Grouper":True}, # OK
+    "name [Criteria]": {"Type": "Textuelle", "File": "Criteria.csv","Log":False, "Seuil": 10000, "Grouper":False}, # OK
+    "siret": {"Type": "Numérique", "File": "Agents.csv","Log":True, "Seuil": 1, "Grouper":False}, # A CORRIGER
+    "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70, "Grouper":True}, # OK
+    "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False,"Seuil": 1000, "Grouper":False}, # OK
+    "zipcode": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 800, "Grouper":False}, # OK Textuelle --> Numérique
+    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 5000, "Grouper":False}, # OK
+    "department": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 2000, "Grouper":False}, # OK
+    "longitude": {"Type": "Numérique", "File": "Agents.csv","Log":True, "Grouper":False},
+    "latitude": {"Type": "Numérique", "File": "Agents.csv","Log":True, "Grouper":False},
+    "weight": {"Type": "Numérique", "File": "Criteria.csv","Log":True, "Grouper":False},
+    "type": {"Type": "Categorielle", "File": "Criteria.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "correctionsNb": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "cancelled": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "awardDate": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1000, "Grouper":False}, # OK mais interprétation ?
+    "awardEstimatedPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "awardPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "cpv": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1000, "Grouper":False}, # A CORRIGER
+    "tenderNumber": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "onBehalf": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "jointProcurement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "fraAgreement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "fraEstimated": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "numberTenders": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "accelerated": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK le reste à N ?
+    "outOfDirectives": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "contractorSme": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 11000, "Grouper":False}, # OK fixed
+    "numberTendersSme": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "subContracted": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "gpa": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False},
+    "multipleCae": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "typeOfContract": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False},
+    "topType": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "renewal": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
+    "contractDuration": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "publicityDuration": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
 }
 
 
