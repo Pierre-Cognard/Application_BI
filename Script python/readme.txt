@@ -1,3 +1,5 @@
-Fonctionnement du script : 
+Fonctionnement du script final: 
 
-Lancer le script "analyse.py" puis selectionner la variable à analyser
+Installer les bibliothèques necessaires : pip install -r requirements.txt
+
+Lancer le script "Finale.py" et laisser la magie opérer

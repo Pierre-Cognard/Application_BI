@@ -18,7 +18,8 @@ def verifier_chaine(valeur):
         return "DEGAGE"
 
 # Fonction pour créer un diagramme en barres pour une colonne spécifique
-def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
+def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage, nom_fichier):
+    plt.figure()  # Crée une nouvelle figure pour chaque graphique
     data = ""
     # Filtrage pour ne conserver que les valeurs avec au moins 5 occurrences
 
@@ -68,25 +69,18 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage):
             #liste[len(str(index))] += 1  # taille des siret
         #print(liste)  # taille des siret
                 
+        
+        plt.bar(valeurs_filtrées.index.astype(str), valeurs_filtrées.values)
+        plt.xlabel(column_name)
+        plt.ylabel('Occurrences')
+        plt.title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
+        plt.xticks(rotation=45, ha='right')  # Rotation pour une meilleure lisibilité
+        plt.tight_layout()  # Ajustement automatique
         if affichage:
-            plt.bar(valeurs_filtrées.index, valeurs_filtrées.values)
-            plt.xlabel(column_name)
-            plt.ylabel('Occurrences')
-            plt.title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
-            plt.xticks(rotation=45, ha='right')  # Rotation pour une meilleure lisibilité
-            plt.tight_layout()  # Ajustement automatique
             plt.show()
         else:
-            fig, ax = plt.subplots()
-            ax.bar(valeurs_filtrées.index, valeurs_filtrées.values)
-            ax.set_xlabel(column_name)
-            ax.set_ylabel('Occurrences')
-            ax.set_title(f'Répartition des valeurs de {column_name} (au moins {filtrage} occurrences)')
-            #ax.tick_params(axis='x', rotation=45)  # Rotation pour une meilleure lisibilité
-            labels = ax.get_xticklabels()
-            ax.set_xticklabels(labels, rotation=45, ha='right')
-            plt.tight_layout()  # Ajustement automatique
-            return fig, data
+            plt.savefig(f"images/Foppa/variables_individuelles/{nom_fichier}.png")
+        return data
         
     else:
         print(f"La colonne '{column_name}' n'existe pas dans le DataFrame.")
@@ -101,10 +95,10 @@ def print_or_save(affichage, data, text):
 
 
 
-def analyser_varchar(champ,bdd):
+def analyser_varchar(champ, bdd):
     fichier_csv = f'../{bdd}/'+dict_type_variables[champ]["File"]
     plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], True)
 
-def analyser_varchar_all(champ):
-    fichier_csv = '../Foppa/'+dict_type_variables[champ]["File"]
-    return plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], False)
+def analyser_varchar_all(champ,bdd):
+    fichier_csv = f'../{bdd}/'+dict_type_variables[champ]["File"]
+    return plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], False,champ)

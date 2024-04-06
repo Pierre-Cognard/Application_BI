@@ -33,6 +33,7 @@ def analyser_valeurs(data, champ):
     return occurrences, min_val, max_val
 
 def generer_graphique(data, champ, log, affichage):
+    plt.figure()  # Crée une nouvelle figure pour chaque graphique
     text = ""
     somme = 0 # nb de valeur pour le champ
 
@@ -97,28 +98,23 @@ def generer_graphique(data, champ, log, affichage):
     # Calculez la largeur en fonction de la plage de données
     largeur = largeur_en_pourcentage / 100 * plage_de_donnees
 
+    
+        
+    plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
+    plt.xlabel(champ)
+    if log:
+        plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
+        plt.ylabel('Occurences (log scale)')
+    else :
+        plt.ylabel('Occurences')
+    plt.title('Répartition des valeurs de ' + champ)
     if affichage:
-        # Maintenant, utilisez cette largeur dans la fonction plt.bar()
-        plt.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
-        plt.xlabel(champ)
-        if log:
-            plt.yscale('log')  # Définition de l'échelle logarithmique pour l'axe y
-            plt.ylabel('Occurences (log scale)')
-        else :
-            plt.ylabel('Occurences')
-        plt.title('Répartition des valeurs de ' + champ)
         plt.show()
     else:
-        fig, ax = plt.subplots()
-        ax.bar(valeurs_analysees.keys(), valeurs_analysees.values(), width=largeur)
-        ax.set_xlabel(champ)
-        if log:
-            ax.set_yscale('log')  # Utilisez une échelle logarithmique pour l'axe y
-            ax.set_ylabel('Occurences (log scale)')
-        else:
-            ax.set_ylabel('Occurences')
-        ax.set_title('Répartition des valeurs de ' + champ)
-        return fig, text
+        plt.savefig(f"images/Foppa/variables_individuelles/{champ}.png")
+    return text
+
+
 
 class Siret:
     SIRET_LENGTH = 14
@@ -181,9 +177,9 @@ def analyser_nombre(champ,bdd):
     data = lire_fichier_csv(fichier_csv)
     generer_graphique(data, champ, log, True)
 
-def analyser_nombre_all(champ):
+def analyser_nombre_all(champ,bdd):
     file = dict_type_variables[champ]["File"]
     log = dict_type_variables[champ]["Log"]
-    fichier_csv = "../Foppa/"+file
+    fichier_csv = f"../{bdd}/"+file
     data = lire_fichier_csv(fichier_csv)
     return generer_graphique(data, champ, log, False)
