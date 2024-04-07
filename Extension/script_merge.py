@@ -1,30 +1,37 @@
 import pandas as pd
-from tqdm import tqdm
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.cluster import KMeans
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.decomposition import TruncatedSVD
+from sklearn.metrics import silhouette_score
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Charger la table 'agents'
-agents = pd.read_csv('../Foppa_clean/Agents_updated.csv')
+# Chargement des données (chemins à ajuster selon l'emplacement de vos fichiers)
+data = pd.read_csv('../Autres_Sources/df_agents_merged_activity.csv')
+lots_df = pd.read_csv('../Foppa/Lots.csv')
+lot_buyers_df = pd.read_csv('../Foppa/LotBuyers.csv')
+lot_suppliers_df = pd.read_csv('../Foppa/LotSuppliers.csv')
+criteria_df = pd.read_csv('../Foppa/Criteria.csv')
 
-# Spécifier les colonnes à charger depuis le fichier Sirene
-cols_to_use = ['siret', 'etablissementSiege', 'etatAdministratifEtablissement']
+# Fusion des DataFrames
+lots_with_agents_df = pd.merge(lots_df, lot_buyers_df[['lotId', 'agentId']], on='lotId', how='left')
+merged_df = pd.merge(lots_with_agents_df, data, on='agentId', how='left')
 
-# Estimer le nombre total de lignes dans le fichier pour configurer la barre de progression
-total_rows = sum(1 for _ in open('../StockEtablissement_utf8.csv', 'r', encoding='utf-8')) - 1  # Soustraire 1 pour l'en-tête
+# Compter la fréquence des codes d'activité
+activity_frequency = merged_df['activitePrincipaleEtablissement'].value_counts()
 
-# Initialiser un DataFrame vide pour les résultats de la fusion
-merged_data = pd.DataFrame()
+# Afficher les codes les plus fréquents
+print(activity_frequency.head())
 
-chunksize = 10**5  # Vous pouvez ajuster cela selon votre mémoire disponible
-
-with tqdm(total=total_rows, unit='row') as pbar:
-    for chunk in pd.read_csv('../StockEtablissement_utf8.csv', usecols=cols_to_use, chunksize=chunksize):
-        # Fusionner le chunk avec la table 'agents' sur 'siret'
-        merged_chunk = agents.merge(chunk, on='siret', how='left')
-        
-        # Ajouter les résultats au DataFrame final
-        merged_data = pd.concat([merged_data, merged_chunk], ignore_index=True)
-        
-        # Mise à jour de la barre de progression
-        pbar.update(chunksize)
-
-# Sauvegarder les résultats
-merged_data.to_csv('Agents_merged.csv', index=False)
+# Créez un graphique en barres des activités principales les plus fréquentes.
+plt.figure(figsize=(10, 6))
+activity_frequency.head(15).plot(kind='bar', color='skyblue')  # Les 10 codes d'activité les plus fréquents.
+plt.title('Top 10 des activités principales des établissements')
+plt.xlabel('Code d\'activité principale')
+plt.ylabel('Nombre d\'établissements')
+plt.xticks(rotation=45)
+plt.tight_layout()  # Ajuste automatiquement les paramètres de la subplot.
+plt.show()
