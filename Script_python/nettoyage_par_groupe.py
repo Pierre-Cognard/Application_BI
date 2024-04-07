@@ -1,5 +1,5 @@
 import pandas as pd
-from ..Script_python.dict_variables import dict_type_variables
+from dict_variables import dict_type_variables
 from holi import *
 from analyse_nombre import *
 from analyse_varchar import *
