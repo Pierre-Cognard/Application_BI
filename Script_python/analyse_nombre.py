@@ -32,7 +32,7 @@ def analyser_valeurs(data, champ):
             occurrences[intervalles[-1]] += 1
     return occurrences, min_val, max_val
 
-def generer_graphique(data, champ, log, affichage):
+def generer_graphique(data, champ, log, affichage, bdd):
     plt.figure()  # Crée une nouvelle figure pour chaque graphique
     text = ""
     somme = 0 # nb de valeur pour le champ
@@ -111,7 +111,7 @@ def generer_graphique(data, champ, log, affichage):
     if affichage:
         plt.show()
     else:
-        plt.savefig(f"images/Foppa/variables_individuelles/{champ}.png")
+        plt.savefig(f"images/{bdd}/variables_individuelles/{champ}.png")
     return text
 
 
@@ -175,11 +175,11 @@ def analyser_nombre(champ,bdd):
     log = dict_type_variables[champ]["Log"]
     fichier_csv = f"../{bdd}/"+file
     data = lire_fichier_csv(fichier_csv)
-    generer_graphique(data, champ, log, True)
+    generer_graphique(data, champ, log, False, bdd)
 
 def analyser_nombre_all(champ,bdd):
     file = dict_type_variables[champ]["File"]
     log = dict_type_variables[champ]["Log"]
     fichier_csv = f"../{bdd}/"+file
     data = lire_fichier_csv(fichier_csv)
-    return generer_graphique(data, champ, log, False)
+    return generer_graphique(data, champ, log, False, bdd)

@@ -35,7 +35,7 @@ class App:
         self.liste2=tk.Listbox(root,borderwidth=1,relief="solid",font=ft) # liste pair var
         self.liste2.place(x=75,y=400,width=150,height=200)
 
-        button2=tk.Button(root,font=ft,text="Afficher \nle graphe",command=self.GButton_114_command) # bouton pair de var
+        button2=tk.Button(root,font=ft,text="Afficher \nle graphe") # bouton pair de var
         button2.place(x=235,y=400,width=90,height=200)
 
         # =============== FOPPA NETTOYEE ===============
@@ -46,7 +46,7 @@ class App:
         self.liste3=tk.Listbox(root,borderwidth=1,relief="solid",font=ft) # liste var indiv
         self.liste3.place(x=475,y=120,width=150,height=200)
 
-        button3=tk.Button(root,font=ft,text="Afficher \nle graphe",command=self.button1_command) # bouton var indiv
+        button3=tk.Button(root,font=ft,text="Afficher \nle graphe",command=self.GButton_114_command) # bouton var indiv
         button3.place(x=635,y=120,width=90,height=200)
 
         label_pair_var2=tk.Label(root,borderwidth=1,relief="solid",text="Paires de variables",font=ft).place(x=475,y=330,width=250,height=30)
@@ -54,7 +54,7 @@ class App:
         self.liste4=tk.Listbox(root,borderwidth=1,relief="solid",font=ft) # liste pair var
         self.liste4.place(x=475,y=400,width=150,height=200)
 
-        button4=tk.Button(root,font=ft,text="Afficher \nle graphe",command=self.GButton_114_command) # bouton pair de var
+        button4=tk.Button(root,font=ft,text="Afficher \nle graphe") # bouton pair de var
         button4.place(x=635,y=400,width=90,height=200)
         # =============================================
 
@@ -63,7 +63,7 @@ class App:
         self.status_label_1.place(x=50, y=85, width=300, height=30) 
 
         self.status_label_2 = tk.Label(root, text="Prêt", font=tkFont.Font(family='Arial', size=10))
-        self.status_label_2.place(x=50, y=365, width=300, height=30)
+        self.status_label_2.place(x=450, y=85, width=300, height=30)
 
     def button1_command(self): # bouton "afficher graphes" pour variables individuelles
         variable = self.liste1.get(self.liste1.curselection())
@@ -81,58 +81,101 @@ class App:
         label.image = photo 
         label.pack()
 
-        data = self.data_for_variable[variable]
+        data = self.data_for_variable_foppa[variable]
         open_cmd_and_display_text(data)
     
 
     def GButton_114_command(self):
-        print("command 114")
+        variable = self.liste3.get(self.liste3.curselection())
 
-    def long_running_task(self):
-        print("analyser_toutes_les_variables")
-        thread = Thread(target=self.analyser_toutes_les_variables, args=("Foppa",))
-        thread.start()
+        print(variable)
 
-    def update_status(self, text): # mettre a jour le label de status1
-        self.status_label_1.config(text=text)
+        new_window = tk.Toplevel()
+        new_window.title("Affichage de l'image")
+
+        # Chargement de l'image avec PIL
+        image = Image.open(f"images/Foppa_clean/variables_individuelles/{variable}.png")
+        photo = ImageTk.PhotoImage(image)
+
+        # Création d'un label pour afficher l'image et ajout dans la nouvelle fenêtre
+        label = tk.Label(new_window, image=photo)
+        label.image = photo 
+        label.pack()
+
+        data = self.data_for_variable_foppa_clean[variable]
+        open_cmd_and_display_text(data)
+
+
+
+    def update_status(self, label, text): # mettre a jour le label de status1
+        label.config(text = text)
     
-    def add_to_list(self,variable): # ajouter la variable a la liste des variables sur l'interface
-        self.liste1.insert(tk.END,variable)
+    def add_to_list(self,elem,variable): # ajouter la variable a la liste des variables sur l'interface
+        elem.insert(tk.END,variable)
+
+    def analyser_all(self, bdd):
+        print("analyser_toutes_les_variables")
+        thread = Thread(target = self.analyse_full)
+        thread.start()
+    
+
+        #self.analyser_toutes_les_variables(bdd)
+
+    
+    def analyse_full(self):
+
+        self.analyser_toutes_les_variables("Foppa")
+
+        self.analyser_toutes_les_variables("Foppa_clean")
+
 
     def analyser_toutes_les_variables(self,bdd): # analyser les variables une a une
-        self.var_to_chart = {}
-        self.data_for_variable = {}
-        open_or_close = {}
+        if bdd == "Foppa":
+            self.data_for_variable_foppa = {}
+        else:
+            self.data_for_variable_foppa_clean = {}
         cpt = 1  # Initialisation du compteur
         index_a_variable = {}  # Dictionnaire pour mapper le numéro (cpt) à la clé de dict_type_variables
 
         for variable, info in dict_type_variables.items():
             index_a_variable[str(cpt)] = variable  # Associe le compteur actuel à la clé 'variable'
             cpt += 1
-            self.update_status("Analyse de "+str(variable)+" en cours...")
+
+            if bdd == "Foppa":
+                self.update_status(self.status_label_1,"Analyse de "+str(variable)+" en cours...") # update status label
+            else:
+                self.update_status(self.status_label_2,"Analyse de "+str(variable)+" en cours...") # update status label"""
 
             if (info["Type"] == "Textuelle" or info["Type"] == "Categorielle"):
                 print(f"Analyse de : {g1}" + variable + f"{g0}",end="")
                 try :
-                    self.data_for_variable[variable] = analyser_varchar_all(variable,bdd)
+                    if bdd == "Foppa":
+                        self.data_for_variable_foppa[variable] = analyser_varchar_all(variable,bdd)
+                        self.add_to_list(self.liste1, variable)
+                    else:
+                        self.data_for_variable_foppa_clean[variable] = analyser_varchar_all(variable,bdd)
+                        self.add_to_list(self.liste3, variable)
                     print(f" ==> {g1}OK{g0}")
-                    self.add_to_list(variable)
-                except:
+                except Exception as e:
                     print(f" ==> {rouge}FAIL{g0}")
+                    print(e)
 
             elif info["Type"] == "Numérique":
                 print(f"Analyse de : {g1}" + variable + f"{g0}",end="")
                 try :
-                    self.data_for_variable[variable] = analyser_nombre_all(variable,bdd)
+                    if bdd == "Foppa":
+                        self.data_for_variable_foppa[variable] = analyser_nombre_all(variable,bdd)
+                        self.add_to_list(self.liste1, variable)
+                    else:
+                        self.data_for_variable_foppa_clean[variable] = analyser_nombre_all(variable,bdd)
+                        self.add_to_list(self.liste3, variable)
                     print(f" ==> {g1}OK{g0}")
-                    self.add_to_list(variable)
-                except:
+                except Exception as e:
                     print(f" ==> {rouge}FAIL{g0}")
-
-            open_or_close[variable] = 0
-        
-        self.update_status("")
+                    print(e)
         print("Analyse terminée")
+
+    
     
 
 def open_cmd_and_display_text(text): # ouvrir un cmd et y afficher les info de la variable
@@ -149,4 +192,8 @@ def open_cmd_and_display_text(text): # ouvrir un cmd et y afficher les info de l
         tmpfile.write('pause > nul\n')
     
     subprocess.run(f'start cmd /k "{tmpfile.name}"', shell=True, check=True)
+
+
+
+
 

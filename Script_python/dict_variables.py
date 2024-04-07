@@ -6,7 +6,7 @@ dict_type_variables = {
     "address": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 70, "Grouper":True}, # OK
     "city": {"Type": "Textuelle", "File": "Agents.csv","Log":False,"Seuil": 1000, "Grouper":False}, # OK
     "zipcode": {"Type": "Numérique", "File": "Agents.csv","Log":False, "Seuil": 800, "Grouper":False}, # OK Textuelle --> Numérique
-    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 5000, "Grouper":False}, # OK
+    "country": {"Type": "Textuelle", "File": "Agents.csv","Log":True, "Seuil": 200, "Grouper":False}, # OK
     "department": {"Type": "Textuelle", "File": "Agents.csv","Log":False, "Seuil": 2000, "Grouper":False}, # OK
     "longitude": {"Type": "Numérique", "File": "Agents.csv","Log":True, "Grouper":False},
     "latitude": {"Type": "Numérique", "File": "Agents.csv","Log":True, "Grouper":False},
@@ -18,7 +18,7 @@ dict_type_variables = {
     "awardEstimatedPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
     "awardPrice": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
     "cpv": {"Type": "Textuelle", "File": "Lots.csv","Log":False, "Seuil": 1000, "Grouper":False}, # A CORRIGER
-    "tenderNumber": {"Type": "Numérique", "File": "Lots.csv","Log":True, "Grouper":False},
+    "lotsNumber": {"Type": "Textuelle", "File": "Lots.csv","Log":True, "Seuil": 1000,"Grouper":False},
     "onBehalf": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
     "jointProcurement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK
     "fraAgreement": {"Type": "Categorielle", "File": "Lots.csv","Log":False, "Seuil": 1, "Grouper":False}, # OK

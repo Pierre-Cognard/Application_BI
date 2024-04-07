@@ -18,7 +18,7 @@ def verifier_chaine(valeur):
         return "DEGAGE"
 
 # Fonction pour créer un diagramme en barres pour une colonne spécifique
-def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage, nom_fichier):
+def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage, nom_fichier,bdd):
     plt.figure()  # Crée une nouvelle figure pour chaque graphique
     data = ""
     # Filtrage pour ne conserver que les valeurs avec au moins 5 occurrences
@@ -79,7 +79,7 @@ def plot_bar_chart_for_column(file_path, column_name, filtrage, affichage, nom_f
         if affichage:
             plt.show()
         else:
-            plt.savefig(f"images/Foppa/variables_individuelles/{nom_fichier}.png")
+            plt.savefig(f"images/{bdd}/variables_individuelles/{nom_fichier}.png")
         return data
         
     else:
@@ -97,8 +97,8 @@ def print_or_save(affichage, data, text):
 
 def analyser_varchar(champ, bdd):
     fichier_csv = f'../{bdd}/'+dict_type_variables[champ]["File"]
-    plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], True)
+    plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], True,champ)
 
 def analyser_varchar_all(champ,bdd):
     fichier_csv = f'../{bdd}/'+dict_type_variables[champ]["File"]
-    return plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], False,champ)
+    return plot_bar_chart_for_column(fichier_csv, champ.split(" ")[0], dict_type_variables[champ]["Seuil"], False, champ,bdd)
