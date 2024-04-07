@@ -29,7 +29,7 @@ def main():
         if (info["Type"] == "Textuelle" or info["Type"] == "Categorielle"):
             print(f"Analyse de : {g1}" + variable + f"{g0}",end="")
             try :
-                var_to_chart[variable], data_for_variable[variable] = analyser_varchar_all(variable)
+                data_for_variable[variable] = analyser_varchar_all(variable,"Foppa")
                 print(f" ==> {g1}OK{g0}")
             except:
                 print(f" ==> {rouge}FAIL{g0}")
@@ -37,7 +37,7 @@ def main():
         elif info["Type"] == "Numérique":
             print(f"Analyse de : {g1}" + variable + f"{g0}",end="")
             try :
-                var_to_chart[variable], data_for_variable[variable] = analyser_nombre_all(variable)
+                data_for_variable[variable] = analyser_nombre_all(variable,"Foppa")
                 print(f" ==> {g1}OK{g0}")
             except:
                 print(f" ==> {rouge}FAIL{g0}")
