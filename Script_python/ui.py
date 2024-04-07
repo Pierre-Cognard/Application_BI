@@ -126,6 +126,20 @@ class App:
 
         self.analyser_toutes_les_variables("Foppa")
 
+        try :
+            import Clean_par_groupe
+            import Clean_lotsNumber
+            import Clean_publicityDuration
+            import Clean_Zipcode
+            import Clean_latETlon
+            import Clean_Country
+            print("Nettoyage effectué !")
+        except Exception as e:
+            print("Erreur pendant le nettoyage !")
+            print(e)
+
+
+
         self.analyser_toutes_les_variables("Foppa_clean")
 
 

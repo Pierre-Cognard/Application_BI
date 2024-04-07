@@ -4,7 +4,7 @@ from scipy.spatial import cKDTree
 from multiprocessing import Pool
 
 # Charger les données
-agents = pd.read_csv('../Foppa_clean/Agents_updated.csv')
+agents = pd.read_csv('../Foppa_clean/Agents.csv')
 geonames = pd.read_csv('../Autres_Sources/geonames-postal-code.csv', delimiter=';')
 
 
@@ -46,4 +46,4 @@ if __name__ == '__main__':
             agents.at[i, 'longitude'] = lon
 
     # Sauvegarder les résultats
-    agents.to_csv('../Foppa_clean/Agents_updated.csv', index=False)
+    agents.to_csv('../Foppa_clean/Agents.csv', index=False)

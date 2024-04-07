@@ -4,7 +4,7 @@ from scipy.spatial import cKDTree
 from multiprocessing import Pool
 
 # Charger les données
-agents = pd.read_csv('../Foppa/Agents.csv')
+agents = pd.read_csv('../Foppa_clean/Agents.csv')
 geonames = pd.read_csv('../Autres_Sources/geonames-all-cities-with-a-population-500.csv', delimiter=';')
 geonames['Coordinates'] = list(zip(geonames['Latitude'], geonames['Longitude']))
 geonames_tree = cKDTree(geonames['Coordinates'].tolist())
@@ -45,4 +45,4 @@ if __name__ == '__main__':
     agents.loc[indices_to_update, 'country'] = results
 
     # Sauvegarder les résultats
-    agents.to_csv('../Foppa_clean/Agents_updated.csv', index=False)
+    agents.to_csv('../Foppa_clean/Agents.csv', index=False)

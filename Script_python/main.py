@@ -26,9 +26,6 @@ def main():
     thread2.start()"""
 
 
-
-
-
     root.mainloop()
 
 
