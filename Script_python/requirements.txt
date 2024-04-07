@@ -3,3 +3,6 @@ pyarrow
 matplotlib
 Levenshtein
 pyqt5
+tqdm
+pathlib
+requests

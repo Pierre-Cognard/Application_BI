@@ -28,8 +28,8 @@ def replace_non_ints_in_place(csv_file, column_name, replacement_value=""):
     df.loc[~mask, column_name] = ""
     
     # Sauvegarder les modifications directement dans le fichier original
-    df.to_csv("test.csv", index=False)
-    print(f"Les modifications ont été sauvegardées dans test.csv.")
+    df.to_csv("../Foppa_clean/Lots.csv", index=False)
+    #print(f"Les modifications ont été sauvegardées dans test.csv.")
 
 # Utiliser la fonction sur ton fichier CSV et la colonne souhaitée
-replace_non_ints_in_place("../Foppa_clean/Lots.csv", "lotsNumber")
+replace_non_ints_in_place("../Foppa/Lots.csv", "lotsNumber")
